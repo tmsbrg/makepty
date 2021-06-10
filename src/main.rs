@@ -1,5 +1,6 @@
 use std::io;
 use std::thread;
+use io_streams;
 use portable_pty::{CommandBuilder, PtySize, native_pty_system};
 use anyhow::Result;
 
@@ -23,18 +24,23 @@ fn main() -> Result<()> {
 
     // Spawn a shell into the pty
     let cmd = CommandBuilder::new("bash");
-    let _child = pair.slave.spawn_command(cmd)?;
+    let mut child = pair.slave.spawn_command(cmd)?;
 
     // Read and parse output from the pty with reader
     let mut reader = pair.master.try_clone_reader()?;
 
     // copy bash output to stdout
     thread::spawn(move || {
-        io::copy(&mut reader, &mut io::stdout()).unwrap();
+        io::copy(&mut reader, &mut io_streams::StreamWriter::stdout().unwrap()).unwrap();
     });
 
     // copy stdin to pty stdin
-    io::copy(&mut io::stdin(), &mut pair.master)?;
+    thread::spawn(move || {
+        io::copy(&mut io_streams::StreamReader::stdin().unwrap(), &mut pair.master).unwrap();
+    });
+
+    // quit when shell exits
+    child.wait()?;
 
     Ok(())
 }
