@@ -11,7 +11,7 @@ use anyhow::Result;
 fn main() -> Result<()> {
 
     let args: Vec<String> = env::args().collect();
-    let cmdname = if args.len() >= 2 { &args[1] } else { "bash" };
+    let cmdname = if args.len() >= 2 { &args[1] } else { "sh" };
 
     // Use the native pty implementation for the system
     let pty_system = native_pty_system();
