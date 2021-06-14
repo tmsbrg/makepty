@@ -1,3 +1,4 @@
+use std::env;
 use std::io;
 use std::thread;
 use io_streams;
@@ -8,6 +9,9 @@ use anyhow::Result;
 // copyright Thomas van der Berg, 2021
 
 fn main() -> Result<()> {
+
+    let args: Vec<String> = env::args().collect();
+    let cmdname = if args.len() >= 2 { &args[1] } else { "bash" };
 
     // Use the native pty implementation for the system
     let pty_system = native_pty_system();
@@ -21,7 +25,7 @@ fn main() -> Result<()> {
     })?;
 
     // Spawn a shell into the pty
-    let cmd = CommandBuilder::new("bash");
+    let cmd = CommandBuilder::new(cmdname);
     let mut child = pair.slave.spawn_command(cmd)?;
 
     // Read and parse output from the pty with reader
