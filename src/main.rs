@@ -4,8 +4,11 @@ use io_streams;
 use portable_pty::{CommandBuilder, PtySize, native_pty_system};
 use anyhow::Result;
 
+// based on example from https://docs.rs/portable-pty/0.4.0/portable_pty/index.html
+// copyright Thomas van der Berg, 2021
 
 fn main() -> Result<()> {
+
     // Use the native pty implementation for the system
     let pty_system = native_pty_system();
 
@@ -13,11 +16,6 @@ fn main() -> Result<()> {
     let mut pair = pty_system.openpty(PtySize {
         rows: 24,
         cols: 80,
-        // Not all systems support pixel_width, pixel_height,
-        // but it is good practice to set it to something
-        // that matches the size of the selected font.  That
-        // is more complex than can be shown here in this
-        // brief example though!
         pixel_width: 0,
         pixel_height: 0,
     })?;

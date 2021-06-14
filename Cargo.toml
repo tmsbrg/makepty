@@ -9,4 +9,5 @@ edition = "2018"
 [dependencies]
 portable-pty = "0.4.0"
 anyhow = "1.0.40"
-io-streams = "0.4.1"
+#io-streams = "0.4.1"
+io-streams = { git = "https://github.com/sunfishcode/io-streams", branch = "main" }
