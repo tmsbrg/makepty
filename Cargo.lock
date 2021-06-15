@@ -151,8 +151,9 @@ dependencies = [
 
 [[package]]
 name = "io-streams"
-version = "0.4.2-alpha.0"
-source = "git+https://github.com/sunfishcode/io-streams?branch=main#81554fcda091ec52e2d965a175e94368769fc3d3"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a78ea090e46c562c18d6e9bfd1a0bc0c72a2e40caf9ce0d5e63a2c188a73728"
 dependencies = [
  "duplex",
  "libc",
