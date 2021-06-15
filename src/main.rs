@@ -6,7 +6,7 @@ use portable_pty::{CommandBuilder, PtySize, native_pty_system};
 use anyhow::Result;
 
 // based on example from https://docs.rs/portable-pty/0.4.0/portable_pty/index.html
-// copyright Thomas van der Berg, 2021
+// copyright Thomas van der Berg, 2021, released under MIT license
 
 fn main() -> Result<()> {
 
@@ -31,7 +31,7 @@ fn main() -> Result<()> {
     // Read and parse output from the pty with reader
     let mut reader = pair.master.try_clone_reader()?;
 
-    // copy bash output to stdout
+    // copy shell output to stdout
     thread::spawn(move || {
         io::copy(&mut reader, &mut io_streams::StreamWriter::stdout().unwrap()).unwrap();
     });
