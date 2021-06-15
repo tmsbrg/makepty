@@ -4,7 +4,7 @@ Create a PTY linked to stdin and stdout
 
 This tool creates a pseudo-TTY which takes input from standard input and prints to standard output.
 I made it as another potential option for building a PTY on a raw (netcat) shell during a penetration test or CTF.
-It is similar to `python3 -c 'import pty;pty.spawn("/bin/bash")'` but also works on platforms that lack Python3.
+It is similar to `python3 -c 'import pty;pty.spawn("/bin/bash")'` but also works on platforms that lack Python.
 
 I was inspired to create it after I took over a FreeBSD box and found that it didn't have python and my pyinstaller version only worked on Linux.
 
@@ -15,6 +15,12 @@ When taking over a target computer, pentesters will generally use a reverse shel
 This initial shell will have no PTY, thus allowing only non-interactive commands to be run.
 A hacker generally needs to upgrade to a PTY to be able to easily run commands such as `sudo` or `vi` remotely.
 `makepty` is a simple binary that will upgrade a raw shell to a TTY shell.
+
+## Platforms
+
+Tested: Linux, FreeBSD
+
+Untested, but might work if you compile it: MacOS, Windows
 
 ## Usage
 
@@ -55,6 +61,21 @@ stty rows 55 columns 212 # send TTY size info to PTY on victim
 ### usage example
 
 [![asciicast](https://asciinema.org/a/7NHg67zFhsfZQnU17rY0J9Rtj.svg)](https://asciinema.org/a/7NHg67zFhsfZQnU17rY0J9Rtj)
+
+## Building
+
+This project uses the Rust nightly `strip` feature to reduce binary size. As such, you'll need Rust nightly to build it. Assuming you've got Rust installed, you'll have to install the nightly toolchain with:
+```sh
+rustup component add rust-src --toolchain nightly
+rustup +nightly target add x86_64-unknown-linux-musl
+```
+
+Then build:
+```sh
+cargo +nightly build --target x86_64-unknown-linux-musl --release
+```
+
+Cross-compiling for FreeBSD uses https://github.com/wezm/freebsd-cross-build with edit mentioned in https://github.com/wezm/freebsd-cross-build/issues/3 to add the nightly toolchain.
 
 ## License
 
