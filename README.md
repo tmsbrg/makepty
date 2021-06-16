@@ -18,9 +18,9 @@ A hacker generally needs to upgrade to a PTY to be able to easily run commands s
 
 ## Platforms
 
-Tested: Linux, FreeBSD
+Tested: Linux, FreeBSD, MacOS
 
-Untested, but might work if you compile it: MacOS, Windows
+Untested, but might work if you compile it: Windows
 
 ## Usage
 
