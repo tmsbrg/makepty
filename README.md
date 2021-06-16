@@ -66,7 +66,7 @@ stty rows 55 columns 212 # send TTY size info to PTY on victim
 
 This project uses the Rust nightly `strip` feature to reduce binary size. As such, you'll need Rust nightly to build it. Assuming you've got Rust installed, you'll have to install the nightly toolchain with:
 ```sh
-rustup component add rust-src --toolchain nightly
+rustup toolchain install nightly
 rustup +nightly target add x86_64-unknown-linux-musl
 ```
 
